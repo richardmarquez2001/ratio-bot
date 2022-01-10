@@ -11,15 +11,21 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-	const parsedMessage = message.content.toLowerCase();
+	try {
+		const parsedMessage = message.content.toLowerCase();
 
-	// second cond prevents bot from ratioing itself
-	if (parsedMessage.includes('ratio') && message.author.id !== '930038766184304650') {
-		message.channel.send('ratio');
+		// second cond prevents bot from ratioing itself
+		if (parsedMessage.includes('ratio') && message.author.id !== '930038766184304650') {
+			message.channel.send('ratio');
+		}
+		else if (message.mentions.has('182594613838610432')) {
+			message.channel.send('noti');
+		}
 	}
-	else if (message.mentions.has('182594613838610432')) {
-		message.channel.send('noti');
+	catch (err) {
+		console.log(err);
 	}
+
 });
 
 client.on('error', err => {

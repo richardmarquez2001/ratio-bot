@@ -25,5 +25,11 @@
   },
   "devDependencies": {
     "eslint": "^8.6.0"
+  },
+  "engines": {
+    "yarn": "1.22.5",
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   }
+  
 }
