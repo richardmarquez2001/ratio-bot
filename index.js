@@ -34,47 +34,52 @@ client.on('messageCreate', (message) => {
 		}
 		// when someone replies
 		if (message.type == 'REPLY') {
-			// generic help message
-			if (message.content == 'help me') {
-				helpCond = false;
-				message.channel.send('```Hello! I am the ratio bot, created by Ric. Here are some things you can type, and test out!: \n- "ratio"\n- "noti"\n- "braindead"\n- replying to my message!\n\nIf you have more things you\'d like to add, please message ric.```');
-			}
-			// for 'can i get a ___ ' condition
-			else {
-				const msgArr = parsedMessage.split(' ');
-				let defaultCond = true;
-				try {
 
-					if (msgArr.length > 4) {
-						// prefix checks for "can i get a"
-						const prefix = msgArr.splice(0, 4);
-						if (prefix.join(' ').toLocaleLowerCase() == 'can i get a') {
-							// gets the second half of the message
-							messageSend.push(msgArr.join(' '));
-
-							defaultCond = false;
-							// prevents default message from being sent
-						}
+			// verifies that the message being replied is towards the bot
+			if (message.mentions.members.first() !== undefined) {
+				if (message.mentions.members.first().user.id == '930038766184304650') {
+					// generic help message
+					if (message.content == 'help me') {
+						helpCond = false;
+						message.channel.send('```Hello! I am the ratio bot, created by Ric. Here are some things you can type, and test out!: \n- "ratio"\n- "noti"\n- "braindead"\n- replying to my message!\n\nIf you have more things you\'d like to add, please message ric.```');
 					}
+					// for 'can i get a ___ ' condition
+					else {
+						const msgArr = parsedMessage.split(' ');
+						let defaultCond = true;
+						try {
+							if (msgArr.length > 4) {
+								// prefix checks for "can i get a"
+								const prefix = msgArr.splice(0, 4);
+								if (prefix.join(' ').toLocaleLowerCase() == 'can i get a') {
+									// gets the second half of the message
+									messageSend.push(msgArr.join(' '));
 
+									defaultCond = false;
+									// prevents default message from being sent
+								}
+							}
+						}
+						// silent return error
+						catch (err) {
+							message.channel.send('Somebody tell <@!182594613838610432> a glitch happened');
+							return;
+						}
+						// default message
+						if (defaultCond == true) messageSend.push('chill chill');
+					}
 				}
-				// silent return error
-				catch (err) {
-					message.channel('Somebody tell <@!182594613838610432> a glitch happened');
-					return;
-				}
-				// default message
-				if (defaultCond == true) messageSend.push('chill chill');
 			}
+
+
 		}
 
 		if (messageSend.length != 0 && helpCond) {
-
 			message.channel.send(messageSend.join(' + '));
 		}
 	}
 	catch (err) {
-		message.channel('Somebody tell <@!182594613838610432> a glitch happened');
+		message.channel.send('Somebody tell <@!182594613838610432> a glitch happened');
 		console.log(err);
 	}
 
